@@ -2,8 +2,11 @@ var handler = function (compileStep) {
     var source = compileStep.read().toString('utf8');
     var outputFile = compileStep.inputPath + '.js';
 
-    var path = compileStep.inputPath.split('.import.');
-    var moduleId = path[0];
+    // uross - we want to keep import - so it works with Facebook flow
+    // var path = compileStep.inputPath.split('.import.');
+    // var moduleId = path[0];
+    var moduleId = compileStep.inputPath.replace(/\.\w+$/, '');
+    var extension = /\.\w+$/.exec(compileStep.inputPath)[0];
 
     if(process.platform === 'win32') {
         // windows support, replace backslashes with forward slashes
@@ -20,7 +23,9 @@ var handler = function (compileStep) {
         // @todo make this configurable:
         'es7.decorators'
     ];
-    if (path[1] === 'jsx') {
+    // uross - because of the changes above
+    // if (path[1] === 'jsx') {
+    if (extension === '.jsx') {
         // add support for React in *.import.jsx files
         extraWhitelist.push('react');
     }

@@ -53,10 +53,11 @@ var normalizeMeteorPackageName = function (name) {
  */
 System.normalize = function (name, parentName, parentAddress) {
 
-    // Allow foomodule.import syntax in import name (TypeScript support)
-    if (name.slice(-7) === '.import') {
-        name = name.slice(0, -7);
-    }
+    // uross - This didn't solve the problem so I commented this and changed compile step in build-plugin.js to leave .import
+    // // Allow foomodule.import syntax in import name (TypeScript support)
+    // if (name.slice(-7) === '.import') {
+    //     name = name.slice(0, -7);
+    // }
 
     // Load original normalize
     return _System.normalize.call(this, normalizeMeteorPackageName(name), parentName, parentAddress);
